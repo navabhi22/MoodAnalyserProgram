@@ -8,6 +8,9 @@ namespace MoodAnalyserProblem
 {
     public class MoodAnalyser
     {
+        /// <summary>
+        /// Analysing mood from message
+        /// </summary>
         public string message;
 
         //Constructor for initializing the message
@@ -15,7 +18,7 @@ namespace MoodAnalyserProblem
         {
             this.message = message;
         }
-
+      
         //Method to analyse mood form a given message
         public string AnalyseMood()
         {
