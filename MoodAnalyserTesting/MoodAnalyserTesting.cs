@@ -49,7 +49,7 @@ namespace MoodAnalyserTesting
         //Method to test Happy Mood in null message
         [TestMethod]
         [TestCategory("Null Exception")]
-        public void GivenNullMessageReturnHappyMood()
+        public void TestMethod3()
         {
             //Arrange
             string message = null;
@@ -61,6 +61,30 @@ namespace MoodAnalyserTesting
 
             //Assert
             Assert.AreEqual(expected, actual);
+
+            //TC 3.1 - Method to test Custom exception for null message
+            [TestMethod]
+            [TestCategory("Custom Exception")]
+            [DataRow(null, "Message should not be null")]
+            [DataRow("", "Message should not be empty")]
+
+            void CustomException(string userInput, string expected)
+            {
+                //Arrange
+                //string message = null;
+                //string expected = "HAPPY";
+                MoodAnalyser moodAnalyzer = new MoodAnalyser(userInput);
+                try
+                {
+                    //Act
+                    string actual = moodAnalyzer.AnalyseMood();
+                }
+                catch (MoodNullException ex)
+                {
+                    //Assert
+                    Assert.AreEqual(expected, ex.Message);
+                }
+            }
         }
     }
 }
