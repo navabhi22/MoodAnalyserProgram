@@ -127,5 +127,66 @@ namespace MoodAnalyserTesting
                 Assert.AreEqual(expected, ex.Message);
             }
         }
+
+        //TC 5.1 - Method to test moodanalyser class with parameter constructor to check if two objects are equal
+        [TestCategory("Reflection")]
+        [TestMethod]
+        [DataRow("I am in Happy mood")]
+        [DataRow("I am in Sad mood")]
+        [DataRow("I am in any mood")]
+        public void GivenMessageReturnParameterizedConstructor(string message)
+        {
+            MoodAnalyser expected = new MoodAnalyser(message);
+            object obj = null;
+            try
+            {
+                obj = MoodAnalyserFactory.CreateMoodAnalyserParameterObject("MoodAnalyser", "MoodAnalyser", message);
+            }
+            catch (MoodAnalyserException actual)
+            {
+                Assert.AreEqual(expected, actual.Message);
+            }
+            obj.Equals(expected);
+        }
+
+        //TC 5.2 - Method to test moodanalyser with diff class with parameter constructor to throw error
+        [TestCategory("Reflection")]
+        [TestMethod]
+        [DataRow("Company", "I am in Happy mood", "Could not find class")]
+        [DataRow("Student", "I am in Sad mood", "Could not find class")]
+        public void GivenMessageReturnParameterizedClassNotFound(string className, string message, string expextedError)
+        {
+            MoodAnalyser expected = new MoodAnalyser(message);
+            object obj = null;
+            try
+            {
+                obj = MoodAnalyserFactory.CreateMoodAnalyserParameterObject(className, "MoodAnalyzer", message);
+
+            }
+            catch (MoodAnalyserException actual)
+            {
+                Assert.AreEqual(expextedError, actual.Message);
+            }
+        }
+
+        //TC 5.3 - Method to test moodanalyser with diff constructor with parameter constructor to throw error
+        [TestCategory("Reflection")]
+        [TestMethod]
+        [DataRow("Customer", "I am in Happy mood", "Could not find constructor")]
+        [DataRow("Student", "I am in Sad mood", "Could not find constructor")]
+        public void GivenMessageReturnParameterizedConstructorNotFound(string constructor, string message, string expextedError)
+        {
+            MoodAnalyser expected = new MoodAnalyser(message);
+            object obj =null ;
+            try
+            {
+                obj = MoodAnalyserFactory.CreateMoodAnalyserParameterObject("MoodAnalyzer", constructor, message);
+            }
+            catch (MoodAnalyserException actual)
+            {
+                Assert.AreEqual(expextedError, actual.Message);
+            }
+        }
+
     }
 }
