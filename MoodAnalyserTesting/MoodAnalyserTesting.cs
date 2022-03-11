@@ -84,5 +84,48 @@ namespace MoodAnalyserTesting
                 Assert.AreEqual(expected, ex.Message);
             }
         }
+
+        //TC 4.1 - Proper class details are provided and expected to return the MoodAnalyser Object
+        [TestMethod]
+        [TestCategory("Reflection")]
+        [DataRow("MoodAnalyserProblem.Reflection.Customer", "Customer")]
+        public void GivenMoodAnalyzerClassName_ReturnMoodAnalyzerObject(string className, string constructorName)
+        {
+            MoodAnalyser expected = new MoodAnalyser();
+            object actual = MoodAnalyserFactory.CreateMoodAnalyse(className, constructorName);
+            expected.Equals(actual);
+        }
+
+        //TC 4.2 - improper class details are provided and expected to throw exception Class not found
+        [TestMethod]
+        [TestCategory("Reflection")]
+        [DataRow("MoodAnalyzerProblem.Reflection.Owner", "Reflection.Owner", "Class not found")]
+        public void GivenImproperClassName_ThrowException(string className, string constructorName, string expected)
+        {
+            try
+            {
+                object actual = MoodAnalyserFactory.CreateMoodAnalyse(className, constructorName);
+            }
+            catch (MoodAnalyserException ex)
+            {
+                Assert.AreEqual(expected, ex.Message);
+            }
+        }
+
+        //TC 4.3 - improper constructor details are provided and expected to throw exception Constructor not found
+        [TestMethod]
+        [TestCategory("Reflection")]
+        [DataRow("MoodAnalyzerProblem.Reflection.Customer", "Reflection.OwnerMood", "Constructor not found")]
+        public void GivenImproperConstructorName_ThrowException(string className, string constructorName, string expected)
+        {
+            try
+            {
+                object actual = MoodAnalyserFactory.CreateMoodAnalyse(className, constructorName);
+            }
+            catch (MoodAnalyserException ex)
+            {
+                Assert.AreEqual(expected, ex.Message);
+            }
+        }
     }
 }
