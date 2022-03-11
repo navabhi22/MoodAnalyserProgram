@@ -40,5 +40,28 @@ namespace MoodAnalyserProblem
                 throw new MoodAnalyserException(MoodAnalyserException.ExceptionTypes.NO_SUCH_METHOD, "Constructor not found");
             }
         }
+
+        //UC5 - Using Reflection Create MoodAnalyser with parameter constructor
+        public static object CreateMoodAnalyserParameterObject(string className, string constructorName, string message)
+        {
+            Type type = typeof(MoodAnalyser);
+            if (type.Name.Equals(className) || type.FullName.Equals(className))
+            {
+                if (type.Name.Equals(constructorName))
+                {
+                    ConstructorInfo constructorInfo = type.GetConstructor(new Type[] { typeof(string) });
+                    var obj = constructorInfo.Invoke(new object[] { message });
+                    return obj;
+                }
+                else
+                {
+                    throw new MoodAnalyserException(MoodAnalyserException.ExceptionTypes.NO_SUCH_METHOD, "Could not find constructor");
+                }
+            }
+            else
+            {
+                throw new MoodAnalyserException(MoodAnalyserException.ExceptionTypes.NO_SUCH_CLASS, "Could not find class");
+            }
+        }
     }
 }
